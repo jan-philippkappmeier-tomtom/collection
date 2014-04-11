@@ -13,6 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 package de.tu_berlin.coga.container.util;
 
 import ds.graph.GraphLocalization;
@@ -76,6 +77,6 @@ public class ArrayIterator<E> implements Iterator<E> {
 	 */
 	@Override
 	public void remove() {
-		throw new UnsupportedOperationException( GraphLocalization.getSingleton().getString( "ds.graph.NotSupportedException" ) );
+		throw new UnsupportedOperationException( GraphLocalization.loc.getString( "ds.graph.NotSupportedException" ) );
 	}
 }

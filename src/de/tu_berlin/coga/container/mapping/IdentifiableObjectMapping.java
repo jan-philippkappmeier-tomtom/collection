@@ -13,10 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/*
- * IdentifiableObjectMapping.java
- *
- */
+
 package de.tu_berlin.coga.container.mapping;
 
 import ds.graph.GraphLocalization;
@@ -83,10 +80,10 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 */
 	protected IdentifiableObjectMapping( R[] mapping, Class<R> rangeType ) {
 		if( rangeType == Void.TYPE ) {
-			throw new IllegalArgumentException( GraphLocalization.getSingleton().getString( "algo.ca.NotInitializedException" ) );
+			throw new IllegalArgumentException( GraphLocalization.loc.getString( "algo.ca.NotInitializedException" ) );
 		}
 		if( mapping == null || rangeType == null ) {
-			throw new NullPointerException( GraphLocalization.getSingleton().getString( "ds.Graph.ParametersNullException" ) );
+			throw new NullPointerException( GraphLocalization.loc.getString( "ds.Graph.ParametersNullException" ) );
 		}
 		this.mapping = mapping;
 		this.rangeType = rangeType;

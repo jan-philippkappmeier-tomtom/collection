@@ -13,6 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 package de.tu_berlin.coga.container.collection;
 
 import ds.graph.GraphLocalization;
@@ -526,7 +527,7 @@ public class HidingSet<E extends Identifiable> extends ArraySet<E> implements Id
 		@Override
 		public void remove() {
 			if( current == null ) {
-				throw new IllegalStateException( GraphLocalization.getSingleton().getString( "ds.graph.IterateFirstException" ) );
+				throw new IllegalStateException( GraphLocalization.loc.getString( "ds.graph.IterateFirstException" ) );
 			} else {
 				HidingSet.this.remove( current );
 				current = null;

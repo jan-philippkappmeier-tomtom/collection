@@ -201,7 +201,7 @@ public class TimeIntegerMapping implements Cloneable, Iterable<TimeIntegerPair>,
 	 */
 	public void increase( int fromTime, int toTime, int amount ) {
 		if( toTime <= fromTime ) {
-			throw new IllegalArgumentException( GraphLocalization.getSingleton().getString( "ds.Graph.toTimeException" ) );
+			throw new IllegalArgumentException( GraphLocalization.loc.getString( "ds.Graph.toTimeException" ) );
 		}
 		TimeIntegerPair from = new TimeIntegerPair( fromTime, 0 );
 		TimeIntegerPair to = new TimeIntegerPair( toTime, 0 );
