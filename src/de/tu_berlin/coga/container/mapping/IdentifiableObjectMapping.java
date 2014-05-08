@@ -56,14 +56,24 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 		this.mapping = mapping.mapping;
 	}
 
-	public IdentifiableObjectMapping( Iterable<D> domain, Class<R> rangeType ) {
-		int maxId = -1;
+  /**
+   *
+   * @param domain
+   * @param rangeType
+   * @throws IllegalArgumentException if a primitive type is given, as they cannot be used generically
+   */
+  @SuppressWarnings( "unchecked" )
+  public IdentifiableObjectMapping( Iterable<D> domain, Class<R> rangeType ) throws IllegalArgumentException {
+    if( rangeType.isPrimitive() ) {
+      throw new IllegalArgumentException();
+    }
+    int maxId = -1;
 		for( D x : domain ) {
 			if( maxId < x.id() ) {
 				maxId = x.id();
 			}
 		}
-		this.mapping = (R[])Array.newInstance( rangeType, maxId + 1 );
+ 		this.mapping = (R[])Array.newInstance( rangeType, maxId + 1 );
 		this.rangeType = rangeType;
 	}
 
@@ -74,14 +84,12 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 *
 	 * @param mapping the array defining the initial mapping.
 	 * @param rangeType the type of the values.
-	 * @exception IllegalArgumentException if rangeType is {@code Void.TYPE}.
-	 * @exception NullPointerException if {@code mapping} or {@code rangeType} are
-	 * null.
+	 * @exception IllegalArgumentException if rangeType is primitive.
 	 */
-	protected IdentifiableObjectMapping( R[] mapping, Class<R> rangeType ) {
-		if( rangeType == Void.TYPE ) {
-			throw new IllegalArgumentException( GraphLocalization.loc.getString( "algo.ca.NotInitializedException" ) );
-		}
+	protected IdentifiableObjectMapping( R[] mapping, Class<R> rangeType ) throws IllegalArgumentException {
+    if( rangeType.isPrimitive() ) {
+      throw new IllegalArgumentException();
+    }
 		if( mapping == null || rangeType == null ) {
 			throw new NullPointerException( GraphLocalization.loc.getString( "ds.Graph.ParametersNullException" ) );
 		}
@@ -96,12 +104,13 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 *
 	 * @param domainSize the initial size of the domain.
 	 * @param rangeType the type of the values.
-	 * @exception IllegalArgumentException if rangeType is {@code Void.TYPE}.
-	 * @exception NegativeArraySizeException if {@code value} is negative.
-	 * @exception NullPointerException if {@code rangeType} is null.
+	 * @exception IllegalArgumentException if rangeType is a primitive type
 	 */
 	@SuppressWarnings( "unchecked" )
-	public IdentifiableObjectMapping( int domainSize, Class<R> rangeType ) {
+	public IdentifiableObjectMapping( int domainSize, Class<R> rangeType ) throws IllegalArgumentException {
+    if( rangeType.isPrimitive() ) {
+      throw new IllegalArgumentException();
+    }
 		this.mapping = (R[])Array.newInstance( rangeType, domainSize );
 		this.rangeType = rangeType;
 	}
@@ -116,7 +125,6 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * mapping.
 	 * @exception ArrayIndexOutOfBoundsException if {@code identifiableObject}'s
 	 * ID is less then 0 or greater equal than the size of the domain.
-	 * @exception NullPointerException if {@code identifiableObject} is null.
 	 * @see #getDomainSize
 	 * @see #setDomainSize
 	 * @see Identifiable
@@ -139,7 +147,6 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * @param value the value to be associated with {@code identifiableObject}.
 	 * @exception ArrayIndexOutOfBoundsException if {@code identifiableObject}'s
 	 * ID is less then 0.
-	 * @exception NullPointerException if {@code identifiableObject} is null.
 	 * @see #getDomainSize
 	 * @see #setDomainSize
 	 * @see Identifiable
@@ -159,6 +166,7 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 *
 	 * @return the size of this mapping's domain.
 	 */
+  @Override
 	public int getDomainSize() {
 		return mapping.length;
 	}
@@ -170,6 +178,7 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * @exception NegativeArraySizeException if {@code value} is negative.
 	 */
 	@SuppressWarnings( "unchecked" )
+  @Override
 	public void setDomainSize( int value ) {
 		R[] newMapping = (R[])Array.newInstance( rangeType, value );
 		System.arraycopy(
@@ -190,6 +199,7 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * non-{@code null} value and false otherwise.
 	 * @exception NullPointerException if {@code identifiableObject} is null.
 	 */
+  @Override
 	public boolean isDefinedFor( D identifiableObject ) {
 		return 0 <= identifiableObject.id()
 						&& identifiableObject.id() < getDomainSize()
@@ -223,6 +233,9 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 */
 	@Override
 	public boolean equals( Object o ) {
+    if( o == this ) {
+      return true;
+    }
 		if( o == null || !(o instanceof IdentifiableObjectMapping) ) {
 			return false;
 		}
@@ -231,9 +244,7 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 			return false;
 		}
 		for( int i = 0; i < mapping.length; i++ ) {
-			if( iom.mapping[i] == null && mapping[i] != null ) {
-				return false;
-			} else if( !iom.mapping[i].equals( mapping[i] ) ) {
+			if( (iom.mapping[i] == null && mapping[i] != null) || ( !iom.mapping[i].equals( mapping[i] ) ) ) {
 				return false;
 			}
 		}

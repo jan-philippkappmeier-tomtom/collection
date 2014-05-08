@@ -35,9 +35,7 @@ import java.util.TreeSet;
  */
 public class TimeObjectMapping<R> implements Cloneable, Iterable<TimeObjectPair<R>>, Mapping<Integer,R> {
 
-	/**
-	 * Stores the mapping internally. Must not be null.
-	 */
+	/** Stores the mapping internally. Must not be null. */
 	protected TreeSet<TimeObjectPair<R>> mapping;
 
 	/**

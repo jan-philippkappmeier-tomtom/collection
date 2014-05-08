@@ -9,6 +9,7 @@ package de.tu_berlin.coga.container.mapping;
  * A utility class used for the underlying {@code TreeSet}. A mapping
  * of a time {@code t} to an arbitrary object {@code v} is stored
  * by adding a {@code TimeObjectPair (t,v)} to the tree set.
+ * @param <R> the object type stored for each time
  */
 class TimeObjectPair<R> implements Cloneable, Comparable<TimeObjectPair<R>> {
 	/**
@@ -70,7 +71,8 @@ class TimeObjectPair<R> implements Cloneable, Comparable<TimeObjectPair<R>> {
 	 * pair's time component is numerically greater than the specified
 	 * pair's time component.
 	 */
-	public int compareTo( TimeObjectPair o ) {
+  @Override
+	public int compareTo( TimeObjectPair<R> o ) {
 		if( time > o.time ) {
 			return 1;
 		} else if( time < o.time ) {
