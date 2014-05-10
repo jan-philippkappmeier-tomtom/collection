@@ -17,7 +17,7 @@
 package de.tu_berlin.coga.container.mapping;
 
 import ds.graph.GraphLocalization;
-import java.lang.reflect.Array;
+import java.util.Objects;
 
 /**
  * The {@code IdentifiableObjectIdentifiableMapping} class represents a mapping from a set
@@ -40,41 +40,29 @@ import java.lang.reflect.Array;
 public class IdentifiableObjectMapping<D extends Identifiable, R> implements Cloneable, IdentifiableMapping<D,R> {
 	private static final int STRING_BREAK_COUNT = 10;
 
-	/**
-	 * The type of the elements stored in the {@code mapping} array. Since
-	 * generics are compile-time only, we need to store its type explicitly in
-	 * order to be able to increase the length of {@code mapping} array later on.
-	 */
-	protected Class<R> rangeType;
-	/**
-	 * The array storing all associations. Must not be {@code null}.
-	 */
-	protected R[] mapping;
+	/** The array storing all associations. Must not be {@code null}. */
+	protected Object[] mapping;
 
 	public IdentifiableObjectMapping( IdentifiableObjectMapping<D,R> mapping ) {
-		this.rangeType = mapping.rangeType;
-		this.mapping = mapping.mapping;
+		this.mapping = Objects.requireNonNull( mapping.mapping, "Mapping must not be null!" );
 	}
 
   /**
-   *
-   * @param domain
-   * @param rangeType
+   * Initializes the mapping for a collection of elements in the domain. The
+   * runtime is O(#domain_elements), which is linear in the size. All elements are
+   * checked for their respective ids and thus it is not necessary that the ids
+   * are a consecutive list.
+   * @param domain the elements of the domain that are to be stored
    * @throws IllegalArgumentException if a primitive type is given, as they cannot be used generically
    */
-  @SuppressWarnings( "unchecked" )
-  public IdentifiableObjectMapping( Iterable<D> domain, Class<R> rangeType ) throws IllegalArgumentException {
-    if( rangeType.isPrimitive() ) {
-      throw new IllegalArgumentException();
-    }
+  public IdentifiableObjectMapping( Iterable<D> domain ) throws IllegalArgumentException {
     int maxId = -1;
 		for( D x : domain ) {
 			if( maxId < x.id() ) {
 				maxId = x.id();
 			}
 		}
- 		this.mapping = (R[])Array.newInstance( rangeType, maxId + 1 );
-		this.rangeType = rangeType;
+    this.mapping = new Object[maxId + 1];
 	}
 
 	/**
@@ -83,18 +71,9 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * for an object is as specified by {@code mapping}. Runtime O(1).
 	 *
 	 * @param mapping the array defining the initial mapping.
-	 * @param rangeType the type of the values.
-	 * @exception IllegalArgumentException if rangeType is primitive.
 	 */
-	protected IdentifiableObjectMapping( R[] mapping, Class<R> rangeType ) throws IllegalArgumentException {
-    if( rangeType.isPrimitive() ) {
-      throw new IllegalArgumentException();
-    }
-		if( mapping == null || rangeType == null ) {
-			throw new NullPointerException( GraphLocalization.loc.getString( "ds.Graph.ParametersNullException" ) );
-		}
-		this.mapping = mapping;
-		this.rangeType = rangeType;
+	protected IdentifiableObjectMapping( R[] mapping ) throws IllegalArgumentException {
+    this.mapping = Objects.requireNonNull( mapping, GraphLocalization.loc.getString( "ds.Graph.ParametersNullException" ) );
 	}
 
 	/**
@@ -103,16 +82,9 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * association for an object is {@code null}. Runtime O(domainSize).
 	 *
 	 * @param domainSize the initial size of the domain.
-	 * @param rangeType the type of the values.
-	 * @exception IllegalArgumentException if rangeType is a primitive type
 	 */
-	@SuppressWarnings( "unchecked" )
-	public IdentifiableObjectMapping( int domainSize, Class<R> rangeType ) throws IllegalArgumentException {
-    if( rangeType.isPrimitive() ) {
-      throw new IllegalArgumentException();
-    }
-		this.mapping = (R[])Array.newInstance( rangeType, domainSize );
-		this.rangeType = rangeType;
+	public IdentifiableObjectMapping( int domainSize ) throws IllegalArgumentException {
+    this.mapping = new Object[domainSize];
 	}
 
 	/**
@@ -130,8 +102,9 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * @see Identifiable
 	 */
 	@Override
+  @SuppressWarnings("unchecked")
 	public R get( D identifiableObject ) {
-		return mapping[identifiableObject.id()];
+		return (R)mapping[identifiableObject.id()];
 	}
 
 	/**
@@ -173,15 +146,16 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 
 	/**
 	 * Sets the size of this mapping's domain to {@code value}. Runtime O(value).
+   * The domain size is changed without any checks, e.g. if the size is smaller
+   * than before, the elements are deleted.
 	 *
 	 * @param value the new size of this mapping's domain.
 	 * @exception NegativeArraySizeException if {@code value} is negative.
 	 */
-	@SuppressWarnings( "unchecked" )
   @Override
 	public void setDomainSize( int value ) {
-		R[] newMapping = (R[])Array.newInstance( rangeType, value );
-		System.arraycopy(
+		Object[] newMapping = new Object[value];
+    System.arraycopy(
 						mapping, 0,
 						newMapping, 0,
 						Math.min( mapping.length, newMapping.length ) );
@@ -212,11 +186,11 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * @return a copy of this mapping.
 	 */
 	@Override
-	@SuppressWarnings( "unchecked" )
 	public IdentifiableObjectMapping<D, R> clone() {
-		R[] newMapping = (R[])Array.newInstance( rangeType, mapping.length );
+    @SuppressWarnings("unchecked")
+    R[] newMapping = (R[])new Object[mapping.length];
 		System.arraycopy( mapping, 0, newMapping, 0, mapping.length );
-		return new IdentifiableObjectMapping<>( newMapping, rangeType );
+		return new IdentifiableObjectMapping<>( newMapping );
 	}
 
 	/**
@@ -240,7 +214,7 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 			return false;
 		}
 		IdentifiableObjectMapping<?,?> iom = (IdentifiableObjectMapping<?,?>)o;
-		if( iom.rangeType != rangeType || iom.mapping.length != mapping.length ) {
+		if( iom.mapping.length != mapping.length ) {
 			return false;
 		}
 		for( int i = 0; i < mapping.length; i++ ) {
@@ -261,12 +235,12 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	@Override
 	public int hashCode() {
 		int sum = 0;
-		for( int i = 0; i < mapping.length; i++ ) {
-			if( mapping[i] == null ) {
-				continue;
-			}
-			sum += mapping[i].hashCode();
-		}
+    for( Object mapping1 : mapping ) {
+      if( mapping1 == null ) {
+        continue;
+      }
+      sum += mapping1.hashCode();
+    }
 		return sum;
 	}
 
