@@ -119,7 +119,7 @@ public interface IdentifiableCollection<E extends Identifiable> extends Iterable
      * Which element is considered to be the predecessor depends on the order the concret
      * implementation of the interface uses!
      * @param element the element which predecessor is wanted
-     * @return the predecessor of {@code element<\code> or null if the element
+     * @return the predecessor of {@code element} or null if the element
      * is the first in the {@code IdentifiableCollection} or is not contained
      * in the {@code IdentifiableCollection}.
      */
@@ -133,7 +133,7 @@ public interface IdentifiableCollection<E extends Identifiable> extends Iterable
      * Which element is considered to be the successor depends on the order
      * the concret implementation of the interface uses!
      * @param element the element which successor is wanted
-     * @return the successor of {@code element<\code> or null if the element
+     * @return the successor of {@code element} or null if the element
      * is the first in the {@code IdentifiableCollection} or is not contained
      * in the {@code IdentifiableCollection}.
      */

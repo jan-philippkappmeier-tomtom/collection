@@ -19,7 +19,9 @@ package de.tu_berlin.coga.container.collection;
 import de.tu_berlin.coga.container.mapping.Identifiable;
 import de.tu_berlin.coga.container.util.ArrayIterator;
 import java.lang.reflect.Array;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * The {@code ArraySet} class represents a set of
@@ -50,8 +52,8 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	 * @param elements an array with elements that shall be contained in this {@code ArraySet}.
 	 */
 	public ArraySet( E[] elements ) {
+		this.elements = Objects.requireNonNull( elements, "Empty et of elements." );
 		this.elementType = elements[0].getClass();
-		this.elements = elements;
 		for( int i = 0; i < elements.length; i++ ) {
 			if( elements[i] == null || elements[i].id() != i ) { throw new IllegalArgumentException(); }
 		}
@@ -72,8 +74,8 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	}
 
 	public ArraySet( ArraySet<E> s ) {
+		this.elements = Objects.requireNonNull( s ).elements;
 		this.elementType = s.elementType;
-		this.elements = s.elements;
 		this.size = s.size;
 	}
 
@@ -288,7 +290,7 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	 */
 	@Override
 	public Iterator<E> iterator() {
-		return new ArrayIterator<>( elements );
+		return this.size > 0 ? new ArrayIterator<>( elements ) : Collections.<E>emptyIterator();
 	}
 
 	/**
@@ -412,6 +414,6 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 		for( int i = 0; i < elements.length; i++ ) {
 			c[i] = elements[i] == null ? null : (E)elements[i].clone();
 		}
-		return new ArraySet<E>( c );
+		return new ArraySet<>( c );
 	}
 }
