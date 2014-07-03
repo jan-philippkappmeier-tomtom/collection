@@ -53,6 +53,7 @@ public class ListSequence<E extends Identifiable> extends LinkedList<E> implemen
 	 * insertion was successful. The element will be added at the end of the
 	 * {@code ListSequence}.
 	 * @param element element to be add.
+   * @return 
 	 */
 	@Override
 	public boolean add( E element ) {
@@ -74,6 +75,7 @@ public class ListSequence<E extends Identifiable> extends LinkedList<E> implemen
 	 * as {@code element}.
 	 * @param element the element to be removed.
 	 */
+  @Override
 	public void remove( E element ) {
 		Iterator<E> i = this.iterator();
 		E e;
@@ -96,6 +98,7 @@ public class ListSequence<E extends Identifiable> extends LinkedList<E> implemen
 	 * @return whether the element {@code element} contained in this
 	 * {@code ListSequence}.
 	 */
+  @Override
 	public boolean contains( E element ) {
 		return super.contains( element );
 	}
@@ -104,6 +107,7 @@ public class ListSequence<E extends Identifiable> extends LinkedList<E> implemen
 	 * Returns whether this {@code ListSequence} is empty. Runtime O(1).
 	 * @return whether this {@code ListSequence} is empty
 	 */
+  @Override
 	public boolean empty() {
 		return (super.isEmpty());
 	}
@@ -118,6 +122,7 @@ public class ListSequence<E extends Identifiable> extends LinkedList<E> implemen
 	 * is the first in the {@code ListSequence} or is not contained
 	 * in the {@code ListSequence}.
 	 */
+  @Override
 	public E predecessor( E element ) {
 		int i = (super.indexOf( element ));
 		if( i == -1 || i == 0 ) {
@@ -136,6 +141,7 @@ public class ListSequence<E extends Identifiable> extends LinkedList<E> implemen
 	 * is the last in the {@code ListSequence} or is not contained
 	 * in the {@code ListSequence}.
 	 */
+  @Override
 	public E successor( E element ) {
 		int i = (super.indexOf( element ));
 		if( i == -1 || i == super.size() - 1 ) {
@@ -151,6 +157,7 @@ public class ListSequence<E extends Identifiable> extends LinkedList<E> implemen
 	 * @return the first element in the sequence and null if the sequence is
 	 * empty.
 	 */
+  @Override
 	public E first() {
 		if( this.empty() ) {
 			return null;
@@ -165,6 +172,7 @@ public class ListSequence<E extends Identifiable> extends LinkedList<E> implemen
 	 * addings.
 	 * @return the last element in the sequence and null if the sequence is empty.
 	 */
+  @Override
 	public E last() {
 		if( this.empty() ) {
 			return null;
