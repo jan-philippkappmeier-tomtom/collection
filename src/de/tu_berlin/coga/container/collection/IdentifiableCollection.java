@@ -28,7 +28,7 @@ import de.tu_berlin.coga.container.mapping.Identifiable;
  * Generics are used to make the datastructure usable for all classes
  * implementing the interface {@link Identifiable}.
  * @param <E> the type of the elements that shall be stored in this IdentifiableCollection.
- *          {@code E}ust implement {@link Identifiable}.
+ *          {@code E} must implement {@link Identifiable}.
  */
 public interface IdentifiableCollection<E extends Identifiable> extends Iterable<E> {
 
@@ -138,5 +138,4 @@ public interface IdentifiableCollection<E extends Identifiable> extends Iterable
      * in the {@code IdentifiableCollection}.
      */
     E successor(E element);
-
 }

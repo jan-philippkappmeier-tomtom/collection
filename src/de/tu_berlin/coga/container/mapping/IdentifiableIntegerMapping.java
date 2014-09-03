@@ -14,10 +14,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-/*
- * IdentifiableIntegerMapping.java
- *
- */
 package de.tu_berlin.coga.container.mapping;
 
 import java.util.Arrays;
@@ -57,6 +53,11 @@ public class IdentifiableIntegerMapping<D extends Identifiable> implements Clone
 		System.arraycopy( iim.mapping, 0, mapping, 0, mapping.length );
 	}
 
+	public IdentifiableIntegerMapping( IdentifiableIntegerMapping<D> iim, int domainSize ) {
+		mapping = new int[domainSize];
+		System.arraycopy( iim.mapping, 0, mapping, 0, Math.min( iim.mapping.length, domainSize ) );
+	}
+
 	/**
 	 * Constructs a new {@code IdentifiableIntegerMapping} object with a
 	 * specified initial mapping. The
@@ -83,12 +84,12 @@ public class IdentifiableIntegerMapping<D extends Identifiable> implements Clone
 	/**
 	 * Uses an existing double mapping to create an integer mapping. The double
 	 * values are casted using {@code (int)}.
-	 * @param transitTimes the double transit times
+	 * @param exactValues the double transit times
 	 */
-	public IdentifiableIntegerMapping( IdentifiableDoubleMapping<D> transitTimes ) {
-		mapping = new int[transitTimes.mapping.length];
-		for( int i = 0; i < transitTimes.mapping.length; ++i )
-			mapping[i] = (int) transitTimes.mapping[i];
+	public IdentifiableIntegerMapping( IdentifiableDoubleMapping<D> exactValues ) {
+		mapping = new int[exactValues.mapping.length];
+		for( int i = 0; i < exactValues.mapping.length; ++i )
+			mapping[i] = (int) exactValues.mapping[i];
 	}
 
 	/**

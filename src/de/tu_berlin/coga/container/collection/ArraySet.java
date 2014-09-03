@@ -43,7 +43,7 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	 * where size means the number of stored elements.
 	 */
 	private int size;
-
+  
 	/**
 	 * Constructs an {@code ArraySet} containing the elements in the
 	 * given array. The elements must be stored in the field corresponding
@@ -52,7 +52,7 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	 * @param elements an array with elements that shall be contained in this {@code ArraySet}.
 	 */
 	public ArraySet( E[] elements ) {
-		this.elements = Objects.requireNonNull( elements, "Empty et of elements." );
+		this.elements = Objects.requireNonNull( elements, "Empty set of elements." );
 		this.elementType = elements[0].getClass();
 		for( int i = 0; i < elements.length; i++ ) {
 			if( elements[i] == null || elements[i].id() != i ) { throw new IllegalArgumentException(); }
@@ -104,11 +104,15 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	 */
 	@Override
 	public boolean add( E element ) {
-		if( element.id() < 0 || element.id() >= this.getCapacity() ) { return false; }
-		if( elements[element.id()] == null ) { size++; }
-		elements[element.id()] = element;
-		return true;
+    return add( element, element.id() );
 	}
+  
+  protected boolean add( E element, int index ) {
+		if( index < 0 || index >= this.getCapacity() ) { return false; }
+		if( elements[index] == null ) { size++; }
+		elements[index] = element;
+		return true;
+  }
 
 	/**
 	 * Removes the element from the {@code ArraySet} having the
@@ -121,11 +125,15 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	 */
 	@Override
 	public void remove( E element ) {
-		if( element.id() >= 0 && element.id() <= elements.length - 1 ) {
-			if( elements[element.id()] != null ) { size--; }
-			elements[element.id()] = null;
-		}
+    remove( element.id() );
 	}
+  
+  protected void remove( int index ) {
+		if( index >= 0 && index <= elements.length - 1 ) {
+			if( elements[index] != null ) { size--; }
+			elements[index] = null;
+		}
+  }
 
 	/**
 	 * Removes and returns the last element of this {@code ListSequence}.
@@ -142,7 +150,7 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 			remove( e );
 			return e;
 		}
-	}
+  }
 
 	/**
 	 * Returns whether the element is contained in this {@code ArraySet}.
@@ -157,6 +165,10 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	public boolean contains( E element ) {
 		return element.id() < 0 || element.id() >= elements.length ? false : elements[element.id()] == element;
 	}
+  
+  protected boolean contains( E element, int index ) {
+    return index < 0 || index >= elements.length ? false : elements[index] == element;
+  }
 
 	/**
 	 * Returns whether this {@code ArraySet} is empty. Runtime O(1).
@@ -248,13 +260,17 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	public E predecessor( E element ) {
 		if( contains( element ) ) {
 			int index = element.id() - 1;
+      return predecessor( index );
+		}
+		return null;
+	}
+  
+  protected E predecessor( int index ) {
 			while( index > -1 && elements[index] == null ) {
 				index--;
 			}
 			return index > -1 ? elements[index] : null;
-		}
-		return null;
-	}
+  }
 
 	/**
 	 * Returns the successor of the element {@code element}.
@@ -275,13 +291,17 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	public E successor( E element ) {
 		if( contains( element ) ) {
 			int index = element.id();
-			while( index < elements.length && elements[index] == null ) {
-				index++;
-			}
-			return index < elements.length ? elements[index] : null;
-		}
+      return successor( index );
+    }
 		return null;
 	}
+  
+  protected E successor( int index ) {
+    while( index < elements.length && elements[index] == null ) {
+      index++;
+    }
+    return index < elements.length ? elements[index] : null;
+  }
 
 	/**
 	 * Returns an iterator for the elements of this {@code ArraySet}.
@@ -383,13 +403,12 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 			equal = false;
 		} else {
 			ArraySet arraysetu = (ArraySet)o;
-			ArraySet<E> arrayset = null;
 			if( arraysetu.getClass() != this.getClass() ) {
 				return false;
-			} else {
-				arrayset = (ArraySet<E>)arraysetu;
 			}
-			equal = (this.size() == arrayset.size());
+      
+			ArraySet<E> arrayset  = (ArraySet<E>)arraysetu;
+      equal = (this.size() == arrayset.size());
 			if( equal ) {
 				Iterator<E> i1 = this.iterator();
 				Iterator<E> i2 = arrayset.iterator();
