@@ -95,8 +95,9 @@ public class IdentifiableDoubleMapping<D extends Identifiable> implements Clonea
 
 	public IdentifiableIntegerMapping<D> round() {
 		int[] roundedMapping = new int[mapping.length];
-		for( int i = 0; i < mapping.length; i++ )
-			roundedMapping[i] = (int)Math.round( mapping[i] );
+		for( int i = 0; i < mapping.length; i++ ) {
+			roundedMapping[i] = (int)Math.round( mapping[i] );   
+    }
 		return new IdentifiableIntegerMapping<>( roundedMapping );
 	}
 
