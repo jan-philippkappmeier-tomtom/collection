@@ -16,7 +16,7 @@
 
 package de.tu_berlin.coga.container.collection;
 
-import ds.graph.GraphLocalization;
+import de.tu_berlin.coga.container.localization.CollectionLocalization;
 import de.tu_berlin.coga.container.mapping.Identifiable;
 import java.util.Iterator;
 
@@ -527,7 +527,8 @@ public class HidingSet<E extends Identifiable> extends ArraySet<E> implements Id
 		@Override
 		public void remove() {
 			if( current == null ) {
-				throw new IllegalStateException( GraphLocalization.loc.getString( "ds.graph.IterateFirstException" ) );
+        throw new IllegalStateException( CollectionLocalization.LOC.getString(
+                "zet.collection.IterateFirstException" ) );
 			} else {
 				HidingSet.this.remove( current );
 				current = null;

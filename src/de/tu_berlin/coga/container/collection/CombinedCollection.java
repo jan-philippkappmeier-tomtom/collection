@@ -1,9 +1,8 @@
 
 package de.tu_berlin.coga.container.collection;
 
-import de.tu_berlin.coga.container.collection.IdentifiableCollection;
 import de.tu_berlin.coga.container.mapping.Identifiable;
-import de.tu_berlin.coga.graph.IteratorIterator;
+import de.tu_berlin.coga.container.util.IteratorIterator;
 import java.util.Iterator;
 
 /**
@@ -22,16 +21,16 @@ public class CombinedCollection<E extends Identifiable> implements IdentifiableC
     this.two = two;
     firstNew = one.size();
   }
-  
+
   private IdentifiableCollection<E> col( E element ) {
     return element.id() < firstNew ? one : two;
   }
-  
+
   private IdentifiableCollection<E> col( int id ) {
-    return id < firstNew ? one : two;    
+    return id < firstNew ? one : two;
   }
-    
-  
+
+
   @Override
   public boolean add( E element ) {
     return col( element ).add( element );

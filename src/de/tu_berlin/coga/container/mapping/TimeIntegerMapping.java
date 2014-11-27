@@ -16,7 +16,7 @@
 
 package de.tu_berlin.coga.container.mapping;
 
-import ds.graph.GraphLocalization;
+import de.tu_berlin.coga.container.localization.CollectionLocalization;
 import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.TreeSet;
@@ -201,7 +201,7 @@ public class TimeIntegerMapping implements Cloneable, Iterable<TimeIntegerPair>,
 	 */
 	public void increase( int fromTime, int toTime, int amount ) {
 		if( toTime <= fromTime ) {
-			throw new IllegalArgumentException( GraphLocalization.loc.getString( "ds.Graph.toTimeException" ) );
+      throw new IllegalArgumentException( CollectionLocalization.LOC.getString( "zet.collection.timeMapping.toTimeException" ) );
 		}
 		TimeIntegerPair from = new TimeIntegerPair( fromTime, 0 );
 		TimeIntegerPair to = new TimeIntegerPair( toTime, 0 );

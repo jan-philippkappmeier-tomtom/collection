@@ -16,7 +16,7 @@
 
 package de.tu_berlin.coga.container.mapping;
 
-import ds.graph.GraphLocalization;
+import de.tu_berlin.coga.container.localization.CollectionLocalization;
 import java.util.Objects;
 
 /**
@@ -73,7 +73,7 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * @param mapping the array defining the initial mapping.
 	 */
 	protected IdentifiableObjectMapping( R[] mapping ) throws IllegalArgumentException {
-    this.mapping = Objects.requireNonNull( mapping, GraphLocalization.loc.getString( "ds.Graph.ParametersNullException" ) );
+    this.mapping = Objects.requireNonNull( mapping, CollectionLocalization.LOC.getString( "zet.collection.MappingNullException" ) );
 	}
 
 	/**
@@ -118,8 +118,6 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 	 * @param identifiableObject the object for which an association is to be
 	 * made.
 	 * @param value the value to be associated with {@code identifiableObject}.
-	 * @exception ArrayIndexOutOfBoundsException if {@code identifiableObject}'s
-	 * ID is less then 0.
 	 * @see #getDomainSize
 	 * @see #setDomainSize
 	 * @see Identifiable

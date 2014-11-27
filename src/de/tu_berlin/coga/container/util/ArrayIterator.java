@@ -16,7 +16,7 @@
 
 package de.tu_berlin.coga.container.util;
 
-import ds.graph.GraphLocalization;
+import de.tu_berlin.coga.container.localization.CollectionLocalization;
 import java.util.Iterator;
 
 /**
@@ -77,6 +77,7 @@ public class ArrayIterator<E> implements Iterator<E> {
 	 */
 	@Override
 	public void remove() {
-		throw new UnsupportedOperationException( GraphLocalization.loc.getString( "ds.graph.NotSupportedException" ) );
+    throw new UnsupportedOperationException( CollectionLocalization.LOC.getString(
+            "zet.collection.RemovalNotSupportedException" ) );
 	}
 }
