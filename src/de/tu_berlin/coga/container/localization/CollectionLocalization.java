@@ -25,7 +25,7 @@ import de.tu_berlin.coga.common.localization.LocalizationManager;
 public final class CollectionLocalization {
   /** Localization access for collection classes. */
   public final static Localization LOC = LocalizationManager.getManager().getLocalization(
-          "de.tu_berlin.coga.container.collection" );
+          "de.tu_berlin.coga.container.localization.localization" );
 
   /** Utility class constructor. */
   private CollectionLocalization() {
