@@ -2,9 +2,10 @@
 package org.zetool.container.util;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
- * A simple an specialized iterator that only returns one element.
+ * A simple specialized iterator that only returns one element.
  * @author Jan-Philipp Kappmeier
  */
 public class SingleIterator<E> implements Iterator<E> {
@@ -26,6 +27,9 @@ public class SingleIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
+    if( e == null ) {
+      throw new NoSuchElementException( "Single element already taken out." );
+    }
     E ret = e;
     e = null;
     return ret;
