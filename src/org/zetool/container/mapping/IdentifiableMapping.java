@@ -25,7 +25,7 @@ package org.zetool.container.mapping;
  * @param <R> the range type
  * @author Jan-Philipp Kappmeier
  */
-public interface IdentifiableMapping<D extends Identifiable,R> extends Mapping<D,R> {
+public interface IdentifiableMapping<D extends Identifiable,R> extends Mapping<D,R>, Iterable<R> {
 	int getDomainSize();
 	void setDomainSize( int value );
 	boolean isDefinedFor( D identifiableObject );

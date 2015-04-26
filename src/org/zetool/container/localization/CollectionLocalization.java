@@ -13,6 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 package org.zetool.container.localization;
 
 import org.zetool.common.localization.Localization;
@@ -25,7 +26,7 @@ import org.zetool.common.localization.LocalizationManager;
 public final class CollectionLocalization {
   /** Localization access for collection classes. */
   public final static Localization LOC = LocalizationManager.getManager().getLocalization(
-          "de.tu_berlin.coga.container.localization.localization" );
+          "org.zetool.container.localization.localization" );
 
   /** Utility class constructor. */
   private CollectionLocalization() {

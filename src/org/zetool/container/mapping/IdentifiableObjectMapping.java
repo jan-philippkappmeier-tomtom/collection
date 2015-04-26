@@ -16,8 +16,11 @@
 
 package org.zetool.container.mapping;
 
-import org.zetool.container.localization.CollectionLocalization;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import org.zetool.container.localization.CollectionLocalization;
+import org.zetool.container.util.ArrayIterator;
 
 /**
  * The {@code IdentifiableObjectIdentifiableMapping} class represents a mapping from a set
@@ -31,7 +34,7 @@ import java.util.Objects;
  * objects to integers the use of the specialized class
  * {@link IdentifiableIntegerMapping} is advised.
  *
- * @param <D> the type of this mapping's domain, i.e. the type of the objects
+ * @param <D> the type of this mapping's key domain, i.e. the type of the objects
  * that are to be mapped to values. {@code D} must implement
  * {@link Identifiable}.
  * @param <R> the type of this mapping's range, i.e. the type of the values the
@@ -272,4 +275,35 @@ public class IdentifiableObjectMapping<D extends Identifiable, R> implements Clo
 		builder.append( ']' );
 		return builder.toString();
 	}
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public Iterator<R> iterator() {
+    return new ArrayIterator<>((R[])mapping);
+  }
+
+  public class ArrayIteratorNull<T> implements Iterator<T> {
+    private T array[];
+    private int pos = 0;
+
+    public ArrayIteratorNull( T anArray[] ) {
+      array = anArray;
+    }
+
+    public boolean hasNext() {
+      return pos < array.length;
+    }
+
+    public T next() throws NoSuchElementException {
+      if( hasNext() ) {
+        return array[pos++];
+      } else {
+        throw new NoSuchElementException();
+      }
+    }
+
+    public void remove() {
+      throw new UnsupportedOperationException();
+    }
+  }
 }
