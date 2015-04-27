@@ -20,6 +20,7 @@
 package org.zetool.container.mapping;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * The {@code IdentifiableIntegerIdentifiableMapping} class represents a mapping from a set
@@ -363,5 +364,10 @@ public class IdentifiableDoubleMapping<D extends Identifiable> implements Clonea
 		builder.append( ']' );
 		return builder.toString();
 	}
+
+  @Override
+  public Iterator<Double> iterator() {
+    throw new UnsupportedOperationException( "Not supported yet." ); //To change body of generated methods, choose Tools | Templates.
+  }
 
 }

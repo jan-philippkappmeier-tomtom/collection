@@ -13,6 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 package org.zetool.container.util;
 
 import org.zetool.container.localization.CollectionLocalization;
@@ -21,7 +22,7 @@ import java.util.Iterator;
 /**
  * A custom iterator thatallows to iterate over several iterators in one run.
  * @author Jan-Philipp Kappmeier
- * @param <T>
+ * @param <T> the type that is iterated over
  */
 public class IteratorIterator<T> implements Iterator<T> {
   /** An array of all iterators to be iterated over. */

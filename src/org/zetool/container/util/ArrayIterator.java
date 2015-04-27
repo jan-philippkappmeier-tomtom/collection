@@ -18,11 +18,12 @@ package org.zetool.container.util;
 
 import org.zetool.container.localization.CollectionLocalization;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
- * An iterator to comfortably iterate through the elements of an
- * {@code ArraySet}. The elements in an {@code ArraySet} are ordered by their
- * IDs.
+ * An iterator to comfortably iterate through the elements of an {@code array}. In the iteration process all elements
+ * with value {@code null} are ignored.
  * @param <E> the type of the array
  */
 public class ArrayIterator<E> implements Iterator<E> {
@@ -38,7 +39,7 @@ public class ArrayIterator<E> implements Iterator<E> {
 	 * @param data the dataarray of the {@code ArraySet}.
 	 */
 	public ArrayIterator( E[] data ) {
-		this.data = data;
+		this.data = Objects.requireNonNull( data, "Array must not be null." );
 		this.index = 0;
 	}
 
@@ -56,9 +57,9 @@ public class ArrayIterator<E> implements Iterator<E> {
 	}
 
 	/**
-	 * Returns the next element of the {@code ArraySet}. Returns {@code null} if
+	 * Returns the next element of the {@code array}. Returns {@code null} if
 	 * there is no more element.
-	 * @return the next element of the {@code ArraySet} if there is one more,
+	 * @return the next element of the {@code array} if there is one more,
 	 * {@code null} else.
 	 */
 	@Override
@@ -67,7 +68,7 @@ public class ArrayIterator<E> implements Iterator<E> {
 			index++;
 			return data[index - 1];
 		} else {
-			return null;
+			throw new NoSuchElementException();
 		}
 	}
 

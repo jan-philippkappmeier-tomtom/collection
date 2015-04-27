@@ -1,9 +1,6 @@
+.sonar/
 nbproject/private/
-nbproject/private/private.xml
 build/
 dist/
-lib/test
-lib/dist
-.sonar/
+lib/
 cobertura.ser
-nbproject/private/private.xml
