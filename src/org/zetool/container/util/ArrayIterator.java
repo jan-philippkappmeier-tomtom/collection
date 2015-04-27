@@ -24,61 +24,59 @@ import java.util.Objects;
 /**
  * An iterator to comfortably iterate through the elements of an {@code array}. In the iteration process all elements
  * with value {@code null} are ignored.
+ *
  * @param <E> the type of the array
  */
 public class ArrayIterator<E> implements Iterator<E> {
 
-	/** The stored elements. */
-	private final E[] data;
-	/** The current index. */
-	private int index;
+  /** The stored elements. */
+  private final E[] data;
+  /** The current index. */
+  private int index;
 
-	/**
-	 * Constructs an iterator for a given dataarray. The ArraySet uses this
-	 * constructor with its internal array.
-	 * @param data the dataarray of the {@code ArraySet}.
-	 */
-	public ArrayIterator( E[] data ) {
-		this.data = Objects.requireNonNull( data, "Array must not be null." );
-		this.index = 0;
-	}
+  /**
+   * Constructs an iterator for a given data array.
+   *
+   * @param data the dataarray of the {@code array}.
+   */
+  public ArrayIterator( E[] data ) {
+    this.data = Objects.requireNonNull( data, "Array must not be null." );
+    this.index = 0;
+  }
 
-	/**
-	 * Returns whether there is one more element in the {@code ArraySet}.
-	 * @return {@code true} if there is one more element in the {@code ArraySet},
-	 * {@code false} else.
-	 */
-	@Override
-	public boolean hasNext() {
-		while( index < data.length && data[index] == null ) {
-			index++;
-		}
-		return index < data.length;
-	}
+  /**
+   * Returns whether there is one more element in the {@code array}.
+   *
+   * @return {@code true} if there is one more element in the {@code array}, {@code false} else.
+   */
+  @Override
+  public boolean hasNext() {
+    while( index < data.length && data[index] == null ) {
+      index++;
+    }
+    return index < data.length;
+  }
 
-	/**
-	 * Returns the next element of the {@code array}. Returns {@code null} if
-	 * there is no more element.
-	 * @return the next element of the {@code array} if there is one more,
-	 * {@code null} else.
-	 */
-	@Override
-	public E next() {
-		if( index < data.length ) {
-			index++;
-			return data[index - 1];
-		} else {
-			throw new NoSuchElementException();
-		}
-	}
+  /**
+   * Returns the next element of the {@code array}. Returns {@code null} if there is no more element.
+   *
+   * @return the next element of the {@code array} if there is one more, {@code null} else.
+   */
+  @Override
+  public E next() {
+    if( index < data.length ) {
+      return data[index++];
+    } else {
+      throw new NoSuchElementException();
+    }
+  }
 
-	/**
-	 * Removes the element that was last returned by {@code public E next()}.
-	 * Method is not yet implemented.
-	 */
-	@Override
-	public void remove() {
+  /**
+   * Removes the element that was last returned by {@code public E next()}. Method is not yet implemented.
+   */
+  @Override
+  public void remove() {
     throw new UnsupportedOperationException( CollectionLocalization.LOC.getString(
             "zet.collection.RemovalNotSupportedException" ) );
-	}
+  }
 }

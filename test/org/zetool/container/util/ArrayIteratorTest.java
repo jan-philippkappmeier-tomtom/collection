@@ -1,6 +1,6 @@
-
 package org.zetool.container.util;
 
+import java.util.NoSuchElementException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Rule;
@@ -12,14 +12,14 @@ import org.junit.rules.ExpectedException;
  * @author Jan-Philipp Kappmeier
  */
 public class ArrayIteratorTest {
-  
+
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
   /**
    * Tests fast failure if {@code null} reference is passed.
    */
-  @Test(expected=NullPointerException.class)
+  @Test(expected = NullPointerException.class)
   public void testInvocationFailure() {
     ArrayIterator<Object> objectIterator = new ArrayIterator<>( null );
   }
@@ -44,7 +44,7 @@ public class ArrayIteratorTest {
    */
   @Test
   public void testFullArray() {
-    Integer[] integers = {1,2,3};
+    Integer[] integers = {1, 2, 3};
     int sum = 0;
     ArrayIterator<Integer> ii = new ArrayIterator<>( integers );
     int invocations = 0;
@@ -55,7 +55,7 @@ public class ArrayIteratorTest {
     assertEquals( sum, 6 );
     assertEquals( invocations, 3 );
   }
-  
+
   /**
    * Tests iteration over sparsely filled arrays.
    */
@@ -71,19 +71,40 @@ public class ArrayIteratorTest {
 
     ArrayIterator<Integer> ii = new ArrayIterator<>( integers );
     while( ii.hasNext() ) {
-      assertEquals( ii.next(), (Integer)1 );
+      assertEquals( ii.next(), (Integer) 1 );
       invocations++;
     }
     ArrayIterator<Double> di = new ArrayIterator<>( doubles );
     while( di.hasNext() ) {
-      assertEquals( di.next(), (Double)Math.PI );
+      assertEquals( di.next(), (Double) Math.PI );
       invocations++;
     }
     ArrayIterator<Long> li = new ArrayIterator<>( longs );
     while( li.hasNext() ) {
-      assertEquals( li.next(), (Long)123456789L );
+      assertEquals( li.next(), (Long) 123456789L );
       invocations++;
     }
     assertEquals( invocations, 3 );
+  }
+
+  /**
+   * Tests that {@link ArrayIterator#next() } obeys the contract and throws an exeption.
+   */
+  @Test(expected = NoSuchElementException.class)
+  public void testToManyCalls() {
+    Integer[] integers = {1, 2, 3};
+    ArrayIterator<Integer> ii = new ArrayIterator<>( integers );
+    while( ii.hasNext() ) {
+    }
+    ii.next();
+  }
+
+  /**
+   * Tests that not implemented {@link ArrayIterator#remove() } throws an exception.
+   */
+  @Test(expected = UnsupportedOperationException.class)
+  public void testRemoveNotSupported() {
+    ArrayIterator<Integer> ii = new ArrayIterator<>( new Integer[0] );
+    ii.remove();
   }
 }
