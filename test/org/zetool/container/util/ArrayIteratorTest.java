@@ -95,6 +95,7 @@ public class ArrayIteratorTest {
     Integer[] integers = {1, 2, 3};
     ArrayIterator<Integer> ii = new ArrayIterator<>( integers );
     while( ii.hasNext() ) {
+      ii.next();
     }
     ii.next();
   }
