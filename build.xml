@@ -53,6 +53,8 @@
     <mkdir dir="${test.build.dir}"/>
     <mkdir dir="${test.build.dir}/classes"/>
     <mkdir dir="${test.reports.dir}"/>
+    <mkdir dir="${test.reports.dir}/junit-html"/>
+    <mkdir dir="${test.reports.dir}/junit-xml"/>
   </target>
 
   <target name="build.test" depends="init.test,build,resolve" description="Build test classes.">
@@ -215,7 +217,7 @@
   <property name="ivy.home" location="${dist.lib.dir}/ivy" />
   <property name="ivy.jar.dir" value="${ivy.home}" />
   <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
-  <property name="ivy.reports.dir"  location="${build.dir}/ivy-reports"/>
+  <property name="ivy.reports.dir"  location="${reports.dir}/ivy-reports"/>
   <available classname="org.apache.ivy.Main" property="ivy.installed"/>
   
   <!--
