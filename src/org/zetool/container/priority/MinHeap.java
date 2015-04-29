@@ -13,6 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 package org.zetool.container.priority;
 
 import java.util.ArrayList;
@@ -23,10 +24,13 @@ import java.util.Map;
 /**
  *
  * @author Martin Groß
+ * @param <O> the object type stored in the heap
+ * @param <P> the priority
  */
 public class MinHeap<O, P extends Number> {
-
+  /** A list of all elements in the heap. */
 	private List<Element> elements;
+  /** A mapping of elements to their priorities. */
 	private Map<O, Integer> objectToIndex;
 
 	public MinHeap() {
@@ -34,8 +38,8 @@ public class MinHeap<O, P extends Number> {
 	}
 
 	public MinHeap( int initialCapacity ) {
-		elements = new ArrayList<Element>( initialCapacity );
-		objectToIndex = new HashMap<O, Integer>( initialCapacity );
+		elements = new ArrayList<>( initialCapacity );
+		objectToIndex = new HashMap<>( initialCapacity );
 	}
 
 	public boolean contains( O object ) {
@@ -133,8 +137,8 @@ public class MinHeap<O, P extends Number> {
 
 	public final class Element {
 
-		private P priority;
 		private O object;
+		private P priority;
 
 		private Element( O object, P priority ) {
 			this.priority = priority;
@@ -157,6 +161,7 @@ public class MinHeap<O, P extends Number> {
 			this.object = object;
 		}
 
+    @Override
 		public String toString() {
 			return "(" + object + "," + priority + ")";
 		}
