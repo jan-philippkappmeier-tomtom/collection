@@ -22,7 +22,7 @@
 
   <target name="build" depends="init,resolve" description="compile the source" >
     <!-- Compile the java code from ${src.dir} into ${build.dir}/classes -->
-    <javac srcdir="${src.dir}" destdir="${classes.dir}" classpath="${classpath}">
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true" classpath="${classpath}">
       <compilerarg value="-Xlint"/>
     </javac>
     <copy todir="${classes.dir}">
@@ -59,7 +59,7 @@
 
   <target name="build.test" depends="init.test,build,resolve" description="Build test classes.">
     <echo>Classpath: ${test.build.classpath}</echo>
-    <javac srcdir="${test.src.dir}" destdir="${test.build.dir}/classes" classpath="${test.build.classpath}">
+    <javac srcdir="${test.src.dir}" destdir="${test.build.dir}/classes" debug="true" classpath="${test.build.classpath}">
     </javac>
   </target>
 
