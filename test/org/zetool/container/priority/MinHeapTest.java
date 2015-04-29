@@ -3,6 +3,7 @@ package org.zetool.container.priority;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -111,5 +112,7 @@ public class MinHeapTest {
     assertEquals((int)strings.priority( "One"), -1 );
     assertEquals((int)strings.priority( "Three"), 5 );
     assertEquals((int)strings.priority( "Four"), 4 );
+    
+    assertNull( strings.priority( "zero" ) );
   }
 }
