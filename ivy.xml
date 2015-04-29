@@ -5,6 +5,7 @@
     <conf name="dist" description="Required to set up the build environment."/>
     <conf name="core" description="Required to compile application."/>
     <conf name="test" description="Required for test only." />
+    <conf name="cob" description="Cobertura test." />
   </configurations>
 
   <dependencies>
@@ -17,5 +18,19 @@
 
     <!-- test dependencies -->
     <dependency org="junit" name="junit" rev="4.12" conf="test->default"/>
-  </dependencies>
+    
+    <!-- cobertura dependencies -->
+    <!--<dependency org="com.sun" name="tools" rev="0" conf="cob->default"/>-->
+    <!--<dependency org="net.sourceforge.cobertura" name="cobertura" rev="2.1.1" conf="cob->default"/>-->
+
+        <!-- test dependencies -->
+        <dependency org="junit" name="junit" rev="4.12" conf="test->default"/>
+
+        <!-- build dependencies -->
+        <!--<dependency org="org.codehaus.sonar-plugins" name="sonar-ant-task" rev="2.1" conf="build->default"/>-->
+        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.4.201502262128" conf="dist->default"/>
+
+        <!-- Global exclusions -->
+        <exclude org="org.apache.ant"/>
+    </dependencies>
 </ivy-module>
