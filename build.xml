@@ -20,15 +20,11 @@
     <mkdir dir="${reports.dir}"/>
   </target>
 
-  <target name="build" depends="init,resolve" description="compile the source" >
+  <target name="build" depends="init" description="compile the source" >
     <!-- Compile the java code from ${src.dir} into ${build.dir}/classes -->
-    <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true" classpath="${classpath}">
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" classpath="${classpath}">
       <compilerarg value="-Xlint"/>
     </javac>
-    <copy todir="${classes.dir}">
-      <fileset dir="${src.dir}"
-             includes="**/*.xml,**/*.properties,**/*.txt,**/*.ico" />
-    </copy>
   </target>
   
   <target name="clean" description="Clean up build, dist, test and report directories." >
@@ -53,18 +49,18 @@
     <mkdir dir="${test.build.dir}"/>
     <mkdir dir="${test.build.dir}/classes"/>
     <mkdir dir="${test.reports.dir}"/>
-    <mkdir dir="${test.reports.dir}/junit-html"/>
     <mkdir dir="${test.reports.dir}/junit-xml"/>
+    <mkdir dir="${test.reports.dir}/junit-html"/>
   </target>
 
-  <target name="build.test" depends="init.test,build,resolve" description="Build test classes.">
+  <target name="build.test" depends="init.test,build" description="Build test classes.">
     <echo>Classpath: ${test.build.classpath}</echo>
-    <javac srcdir="${test.src.dir}" destdir="${test.build.dir}/classes" debug="true" classpath="${test.build.classpath}">
+    <javac srcdir="${test.src.dir}" destdir="${test.build.dir}/classes" classpath="${test.build.classpath}">
     </javac>
   </target>
 
   <target name="test" depends="build.test" description="Perform JUnit tests.">
-    <junit printsummary="yes" haltonfailure="no" showoutput="true">
+    <junit printsummary="yes" haltonfailure="yes" showoutput="true">
       <classpath>
         <pathelement path="${test.classpath}"/>        
       </classpath>
@@ -121,7 +117,7 @@
 		<mkdir dir="${coverage.html.dir}" />
 	</target>
 
-  <target name="build.coverage" depends="init.coverage,resolve">
+  <target name="build.coverage" depends="init.coverage">
     <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes">
       <classpath refid="cobertura.classpath" />
       <compilerarg value="-Xlint"/> <!-- enabled in normal build -->
@@ -143,7 +139,7 @@
 	</target>
 
 	<target name="test.coverage" depends="init.coverage,build.coverage,build.test">
-		<junit fork="yes" dir="${basedir}" failureProperty="test.failed"  printsummary="yes" haltonfailure="no" showoutput="true">
+		<junit fork="yes" dir="${basedir}" failureProperty="test.failed"  printsummary="yes" haltonfailure="yes" showoutput="true">
 			<!-- Note the classpath order: instrumented classes are before the
            original (uninstrumented) classes.  This is important. -->
 			<classpath location="${instrumented.dir}" />
@@ -245,35 +241,32 @@
     <ivy:cachepath pathid="core.path" conf="core"/>
     <ivy:cachepath pathid="test.path" conf="test"/>
     <ivy:cachepath pathid="build.path" conf="dist"/>
-     </target>
+  </target>
 
-      <target name="jacoco" depends="build.test" description="Run unit tests and Jacoco code coverage reporting">
-        <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpathref="test.path"/>
-          <jacoco:coverage destfile="${build.dir}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant">
-            <junit haltonfailure="yes" fork="true">
-                <classpath>
-                    <path refid="test.path"/>
-                    <path refid="build.path"/>
-                    <pathelement path="${classes.dir}"/>
-                    <pathelement path="${classpath}"/>                    
-                    <pathelement path="${test.build.dir}/classes"/>
-                    <!--<pathelement path="${test.classes.dir}"/>-->
-                </classpath>
-                <formatter type="plain" usefile="false" />
-                <formatter type="xml"/>
-                <batchtest fork="yes" todir="${reports.dir}/junit-xml">
-                    <fileset dir="${test.src.dir}">
-                        <include name="**/*Test*.java"/>
-                        <exclude name="**/AllTests.java"/>
-                    </fileset>
-                </batchtest>
-            </junit>
-  </jacoco:coverage>
-  <junitreport todir="${reports.dir}/junit-html">
-    <fileset dir="${reports.dir}/junit-xml"/>
-    <report todir="${reports.dir}/junit-html"/>
-  </junitreport>
+  <target name="jacoco" depends="resolve,build.test" description="Run unit tests and Jacoco code coverage reporting">
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpathref="test.path"/>
+      <jacoco:coverage destfile="${build.dir}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant">
+        <junit haltonfailure="yes" fork="true">
+          <classpath>
+            <path refid="test.path"/>
+            <path refid="build.path"/>
+            <pathelement path="${classes.dir}"/>
+            <pathelement path="${classpath}"/>                    
+            <pathelement path="${test.build.dir}/classes"/>
+          </classpath>
+          <formatter type="plain" usefile="false" />
+          <formatter type="xml"/>
+          <batchtest fork="yes" todir="${reports.dir}/junit-xml">
+            <fileset dir="${test.src.dir}">
+                <include name="**/*Test*.java"/>
+                <exclude name="**/AllTests.java"/>
+            </fileset>
+          </batchtest>
+        </junit>
+      </jacoco:coverage>
+      <junitreport todir="${reports.dir}/junit-html">
+        <fileset dir="${reports.dir}/junit-xml"/>
+        <report todir="${reports.dir}/junit-html"/>
+      </junitreport>
     </target>
-
-    
   </project>
