@@ -117,7 +117,7 @@
     </fileset>
     <pathelement path="${classpath}"/>
   </path>
-	<taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+	<!--<taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>-->
 
 	<target name="init.coverage" depends="init">
 		<mkdir dir="${instrumented.dir}" />
