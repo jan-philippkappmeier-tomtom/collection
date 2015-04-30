@@ -244,11 +244,11 @@
     <ivy:report todir='${ivy.reports.dir}' graph='true' xml='false'/>
     <ivy:cachepath pathid="core.path" conf="core"/>
     <ivy:cachepath pathid="test.path" conf="test"/>
-    <ivy:cachepath pathid="build.path"   conf="dist"/>
+    <ivy:cachepath pathid="build.path" conf="dist"/>
      </target>
 
       <target name="jacoco" depends="build.test" description="Run unit tests and Jacoco code coverage reporting">
-        <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpathref="build.path"/>
+        <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpathref="test.path"/>
           <jacoco:coverage destfile="${build.dir}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant">
             <junit haltonfailure="yes" fork="true">
                 <classpath>
