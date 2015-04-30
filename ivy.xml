@@ -15,7 +15,7 @@
     <!--<dependency org="net.sourceforge.cobertura" name="cobertura" rev="2.1.1" conf="cob->default"/>-->
     <!--<dependency org="com.sun" name="tools" rev="0" conf="cob->default"/>-->
     
-    <!-- build dependencies -->
+    <!-- core dependencies -->
 
     <!-- Global exclusions -->
     <exclude org="org.apache.ant"/>
