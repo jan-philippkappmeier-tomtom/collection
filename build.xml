@@ -68,6 +68,9 @@
         <pathelement path="${classpath}"/>
       </classpath>    
     </javac>
+    <copy todir="${classes.dir}">
+      <fileset dir="src" includes="**/*.xml,**/*.properties,**/*.txt,**/*.ico" />
+    </copy>
   </target>
 
   <target name="test" depends="build.test" description="Perform JUnit tests.">
