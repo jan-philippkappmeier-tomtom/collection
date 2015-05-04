@@ -22,6 +22,8 @@ import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The {@code ArraySet} class represents a set of
@@ -431,7 +433,11 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	public ArraySet<E> clone() {
 		E[] c = (E[])Array.newInstance( elementType, elements.length );
 		for( int i = 0; i < elements.length; i++ ) {
-			c[i] = elements[i] == null ? null : (E)elements[i].clone();
+      try {
+        c[i] = elements[i] == null ? null : (E)elements[i].clone();
+      } catch( CloneNotSupportedException ex ) {
+        throw new AssertionError( "Clone not supported", ex );
+      }
 		}
 		return new ArraySet<>( c );
 	}

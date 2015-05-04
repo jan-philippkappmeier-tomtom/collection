@@ -32,9 +32,6 @@ public interface Identifiable extends Cloneable {
 	 */
 	int id();
 
-	/**
-	 * Returns a clone of this {@code Identifiable} object.
-	 * @return a clone of this {@code Identifiable} object.
-	 */
-	Identifiable clone();
+  public Object clone() throws CloneNotSupportedException;
+
 }

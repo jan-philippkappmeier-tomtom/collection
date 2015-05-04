@@ -20,6 +20,8 @@ import org.zetool.container.mapping.Identifiable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The {@code ListSequence} class represents a sequence of {@code Identifiable}
@@ -30,7 +32,7 @@ import java.util.LinkedList;
  * specified IDs or removing arbitrary elements.
  * @param <E>
  */
-public class ListSequence<E extends Identifiable> extends LinkedList<E> implements IdentifiableCollection<E> {
+public class ListSequence<E extends Identifiable> extends LinkedList<E> implements IdentifiableCollection<E>, Cloneable {
 
 	/**
 	 * Creates a {@code ListSequence} object without elements.
@@ -212,11 +214,16 @@ public class ListSequence<E extends Identifiable> extends LinkedList<E> implemen
 	 * object.
 	 */
 	@Override
+  @SuppressWarnings("unchecked")
 	public ListSequence<E> clone() {
-		ListSequence<E> copy = new ListSequence<>();
+		ListSequence<E> copy = (ListSequence<E>)super.clone();
 		for( E e : this ) {
-			copy.add( (E)e.clone() );
-		}
+      try {
+        copy.add( (E)e.clone() );
+      } catch( CloneNotSupportedException ex ) {
+        throw new AssertionError( "Clone not supported", ex );
+      }
+    }
 		return copy;
 	}
 
