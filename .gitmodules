@@ -1,4 +1,3 @@
-[submodule "zet-common"]
+[submodule ".submodules/zet-common"]
 	path = .submodules/zet-common
 	url = https://github.com/zetool/common.git
-	
