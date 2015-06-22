@@ -1,6 +1,5 @@
 .sonar/
 nbproject/private/
-build/
-dist/
-lib/
-cobertura.ser
+/build/
+/dist/
+/lib/
