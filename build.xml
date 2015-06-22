@@ -306,7 +306,7 @@
     </macrodef>
 
     <target name="build.submodules" depends="init">
-        <iterate/>
+        <!-- <iterate/> -->
         <property name="classpath.custom" value="lib/zetool-common-rc.jar"/>
     </target>
     

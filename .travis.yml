@@ -2,7 +2,9 @@ language: java
 
 install: ant resolve
 
-script: ant test.travis
+script: 
+  - ./scripts/run-tests.sh
+  - ant test.travis
 
 jdk:
   - oraclejdk8
