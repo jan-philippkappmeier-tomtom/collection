@@ -299,7 +299,7 @@
     
     <macrodef name="iterate">
         <sequential>
-            <subant target="disttravis">
+            <subant target="dist.travis">
                 <fileset dir=".submodules" includes="*/build.xml"/>
             </subant>
         </sequential>
