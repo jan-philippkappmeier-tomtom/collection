@@ -76,7 +76,13 @@
   <target name="test" depends="build.test" description="Perform JUnit tests.">
     <junit printsummary="yes" haltonfailure="no" showoutput="true">
       <classpath>
+        <path refid="dist.path"/>
+        <path refid="test.path"/>
+        <path refid="core.path"/>
         <pathelement path="${test.classpath}"/>        
+        <pathelement path="${classes.dir}"/>
+        <pathelement path="${classpath}"/>                    
+        <pathelement path="${test.build.dir}/classes"/>
       </classpath>
       
       <formatter type="xml"/>
