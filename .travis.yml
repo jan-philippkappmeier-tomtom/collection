@@ -3,7 +3,7 @@ language: java
 install: ant resolve
 
 script: 
-  - ./scripts/deps.sh
+  - ./scripts/build_dependencies.sh
   - ant test.travis
 
 jdk:
