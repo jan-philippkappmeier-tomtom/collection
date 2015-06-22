@@ -21,12 +21,14 @@
   </target>
 
   <target name="build" depends="init,resolve" description="compile the source" >
-    <echo>Classpath: ${classpath}</echo>
+    <!-- Allow other targets to override classpath before calling build -->
+    <property name="classpath.custom" value="${classpath}"/>
+    <echo>Classpath: ${classpath.custom}</echo>
     <!-- Compile the java code from ${src.dir} into ${build.dir}/classes -->
     <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes">
       <classpath>
         <path refid="core.path"/>
-        <pathelement path="${classpath}"/>
+        <pathelement path="${classpath.custom}"/>
       </classpath>
       <compilerarg value="-Xlint"/>
     </javac>
@@ -293,5 +295,21 @@
         <fileset dir="${reports.dir}/junit-xml"/>
         <report todir="${reports.dir}/junit-html"/>
       </junitreport>
+    </target>
+    
+    <macrodef name="iterate">
+        <sequential>
+            <subant target="disttravis">
+                <fileset dir=".submodules" includes="*/build.xml"/>
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <target name="build.submodules" depends="init">
+        <iterate/>
+        <property name="classpath.custom" value="lib/zetool-common-rc.jar"/>
+    </target>
+    
+    <target name="test.travis" depends="build.submodules,test">
     </target>
   </project>
