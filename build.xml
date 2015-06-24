@@ -4,7 +4,8 @@
          xmlns:git="antlib:com.rimerosolutions.ant.git">
 
   <!-- Loads all necessary paths and parameters -->
-  <property file="build.properties" />
+  <property file="scripts/build.properties" />
+  <property file="build_local.properties" />
   
   <description>
     Build file for zetool collection library.
