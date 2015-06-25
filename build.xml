@@ -3,10 +3,10 @@
 <project name="zetool collection" default="release" basedir=".">
 
   <!-- Loads all necessary paths and parameters -->
-  <!-- Load custom properties for the project. Must be first. -->
-  <property file="build.properties" />
   <!-- Load general properties from the global build directory. -->
   <property file="scripts/build.properties" />
+  <!-- Load custom properties for the project. Must be first. -->
+  <property file="build.properties" />
   
   <description>
     Build file for zetool collection library.
