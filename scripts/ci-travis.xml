@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+<project
+xmlns:git="antlib:com.rimerosolutions.ant.git">
+    <target name="build.submodules" depends="init,git-clone">
+      <!-- <iterate/> -->
+      <property name="classpath.custom" value="${core.lib.dir}/zetool-common-rc.jar"/>
+    </target>
+    
+    <target name="test.travis" depends="build.submodules,test">
+    </target>
+
+<!--  <ivy:cachepath pathid="ant.git.tasks.classpath" conf="YOUR_IVY_CONFIGURATION"/> -->
+
+  <target name="init-git" depends="resolve" description="Initialize git.">
+    <taskdef uri="antlib:com.rimerosolutions.ant.git" resource="com/rimerosolutions/ant/git/jgit-ant-lib.xml">
+      <classpath refid="dist.path"/>
+    </taskdef>
+  </target>
+  
+  <macrodef name="compile-dependency">
+    <attribute name="repository"/>
+    <sequential>
+      <delete dir="${build.dir}/tmp/git-deps/@{repository}"/>
+      <mkdir dir="${build.dir}/tmp/git-deps/@{repository}"/>
+      <echo>Cloning @{repository}.</echo>
+      <git:git directory="${build.dir}/tmp/git-deps/@{repository}" verbose="false">
+        <git:clone uri="https://github.com/@{repository}.git" />
+      </git:git>
+      <echo>Compiling @{repository}.</echo>
+      <subant target="dist-rc" antfile="build.xml" buildpath="${build.dir}/tmp/git-deps/@{repository}"/>
+      <echo>Copying library</echo>
+      <copy todir="${core.lib.dir}">
+        <fileset dir="${build.dir}/tmp/git-deps/@{repository}/${dist.dir}" includes="**/*.jar" />
+      </copy>
+      <echo>Cleaning up build direcotry.</echo>
+      <delete dir="${build.dir}/tmp/git-deps/@{repository}" failonerror="false"/>
+    </sequential>
+  </macrodef>
+
+  
+  <target name="git-clone" depends="init-git">
+    <mkdir dir="${build.dir}/tmp/git-deps"/>
+    <echo>Cloning depending git directories.</echo>
+    <compile-dependency repository="zetool/common"/>
+    <delete dir="${build.dir}/tmp/git-deps" failonerror="false"/>
+  </target>
+
+</project>
