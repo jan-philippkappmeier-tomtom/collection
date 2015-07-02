@@ -2,8 +2,8 @@
 <!DOCTYPE project>
 <project>
   
-  <property lib.name.rc="${lib.name}-rc.jar"/>
-  <property lib.dir.jenkins="../lib"/>
+  <property name="lib.name.rc" value="${lib.name}-rc.jar"/>
+  <property name="lib.dir.jenkins" value="../lib"/>
   
   <target name="init.jenkins">
     <mkdir dir="${lib.dir.jenkins}"/>
