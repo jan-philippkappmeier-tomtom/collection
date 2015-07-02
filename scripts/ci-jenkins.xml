@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
 <project>
+  
+  <property lib.name.rc="${lib.name}-rc.jar"/>
+  <property lib.dir.jenkins="../lib"/>
+  
   <target name="init.jenkins">
     <mkdir dir="${lib.dir.jenkins}"/>
   </target>
