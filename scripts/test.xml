@@ -12,11 +12,12 @@
 
   <macrodef name="setup-test">
     <sequential>
+      <property name="classpath.custom" value="${classpath}"/>
       <path id="test.classpath">
         <path refid="test.path"/>
         <path refid="core.path"/>
         <pathelement path="${classes.dir}"/>
-        <pathelement path="${classpath}"/>                    
+        <pathelement path="${classpath.custom}"/>                    
         <pathelement path="${test.build.dir}/classes"/>
       </path>
       <fileset id="test.fileset" dir="${test.src.dir}">
@@ -39,15 +40,13 @@
         - classpath.custom can be used to override project specific classpath
   -->
   <target name="build.test" depends="init.test,build" description="Build test classes.">
-    <echo>Classpath: ${test.build.classpath}</echo>
+    <property name="classpath.custom" value="${classpath}"/>
+    <echo>Classpath: ${classpath.custom}</echo>
     <setup-test/>
     <javac srcdir="${test.src.dir}" destdir="${test.build.dir}/classes" debug="yes">
       <classpath>
-        <path refid="core.path"/>
-        <path refid="test.path"/>
-        <pathelement path="${classes.dir}"/>
-        <pathelement path="${classpath}"/>
-      </classpath>    
+        <path refid="test.classpath"/>
+      </classpath>
     </javac>
     <copy todir="${classes.dir}">
       <fileset dir="src" includes="**/*.xml,**/*.properties,**/*.txt,**/*.ico" />
