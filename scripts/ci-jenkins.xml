@@ -49,4 +49,10 @@
     </junitreport>
   </target>
 
+<target name="init-ant-contrib" depends="resolve">
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+    <classpath refid="dist.path"/>
+  </taskdef>
+</target>
+
 </project>
