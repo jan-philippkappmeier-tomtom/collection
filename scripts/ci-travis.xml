@@ -9,9 +9,16 @@ xmlns:git="antlib:com.rimerosolutions.ant.git">
   <property name="travis.ivy.lib.dir" location="../../lib/"/>
   <property name="travis.ivy.jar.dir" location="${travis.ivy.lib.dir}/dist/ivy/"/> 
 
-  <target name="init.travis">
+  <target name="init.travis.submodule">
+    <!-- Common direcotry for libraries and ivy libs for subtasks. -->
     <property name="ivy.jar.dir" location="${travis.ivy.jar.dir}"/>
     <property name="ivy.lib.dir" location="${travis.ivy.lib.dir}"/>
+  </target>
+
+  <target name="init.travis">
+    <!-- Use the same directories for ivy as for subtasks. -->
+    <property name="ivy.jar.dir" location="${build.dir}/tmp/git-deps/lib/dist/ivy/"/>
+    <property name="ivy.lib.dir" location="${build.dir}/tmp/git-deps/lib/"/>
   </target>
 
   <target name="test.travis" depends="init.travis,build.submodules,test"> <!-- depends: build.submodules, -->
@@ -62,7 +69,7 @@ xmlns:git="antlib:com.rimerosolutions.ant.git">
     <concatenate-dependencies lineparam="${dependencies}" base="../../lib/"/>
   </target>
 
-  <target name="dist-rc-git" depends="init.travis,build.git,dist-rc" description="generating dist and test" >
+  <target name="dist-rc-git" depends="init.travis.submodule,build.git,dist-rc" description="generating dist and test" >
   </target>
 
   <macrodef name="make-github">
