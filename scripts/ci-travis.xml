@@ -3,8 +3,7 @@
 <project
 xmlns:git="antlib:com.rimerosolutions.ant.git">
   <target name="build.submodules" depends="init,git-clone" if="dependencies">
-    <echo>Not skipped!!!</echo>
-    <!-- <concatenate-dependencies lineparam="${dependencies}" base="${core.lib.dir}/"/> -->
+    <concatenate-dependencies lineparam="${dependencies}" base="${core.lib.dir}/"/>
   </target>
 
   <property name="travis.ivy.lib.dir" location="../../lib/"/>
