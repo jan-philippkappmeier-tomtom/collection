@@ -28,18 +28,4 @@
     <delete dir="${build.dir}/classes"/>
     <delete dir="${test.build.dir}/classes"/>
   </target>
-
-  <!-- Tasks with regards to testing. -->
-  
-
-    <!-- Tasks in the release process. -->
-    
-
-
-
-  <!-- Tasks in the build chain. -->
- 
-
-
-
 </project>

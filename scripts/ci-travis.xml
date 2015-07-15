@@ -2,8 +2,9 @@
 <!DOCTYPE project>
 <project
 xmlns:git="antlib:com.rimerosolutions.ant.git">
-  <target name="build.submodules" depends="init,git-clone">
-    <concatenate-dependencies lineparam="${dependencies}" base="${core.lib.dir}/"/>
+  <target name="build.submodules" depends="init,git-clone" if="dependencies">
+    <echo>Not skipped!!!</echo>
+    <!-- <concatenate-dependencies lineparam="${dependencies}" base="${core.lib.dir}/"/> -->
   </target>
 
   <property name="travis.ivy.lib.dir" location="../../lib/"/>
@@ -79,7 +80,7 @@ xmlns:git="antlib:com.rimerosolutions.ant.git">
     </sequential>
   </macrodef>
  
-  <target name="git-clone" depends="init-git,init-ant-contrib">
+  <target name="git-clone" depends="init-git,init-ant-contrib" if="dependencies">
     <mkdir dir="${build.dir}/tmp/git-deps"/>
     <echo>Cloning depending git directories:</echo>
     <make-github/>
@@ -92,5 +93,4 @@ xmlns:git="antlib:com.rimerosolutions.ant.git">
     </for>
     <!--<delete dir="${build.dir}/tmp/git-deps" failonerror="false"/>-->
   </target>
-
 </project>
