@@ -11,11 +11,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
-/*
- * IdentifiableIntegerMapping.java
- *
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package org.zetool.container.mapping;
 
@@ -23,9 +19,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 /**
- * The {@code IdentifiableIntegerIdentifiableMapping} class represents a mapping from a set
+ * The {@code IdentifiableDoubleMapping} class represents a mapping from a set
  * of identifiable objects to integers. It is a specialized version of
- * {@code IdentifiableObjectIdentifiableMapping} made for mappings to integers. An array is
+ * {@code IdentifiableObjectMapping} made for mappings to integers. An array is
  * used for storing the mapping internally. The ID of an identifiable object
  * determines the position in the array where the object's value is stored. This
  * approach allows a very efficient implementation of mappings. It is
