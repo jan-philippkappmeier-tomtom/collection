@@ -21,17 +21,14 @@ package org.zetool.container.mapping;
  * value, that is used to identify the object. The ID is used to store
  * identifiable objects efficiently in arraybased datastructures.
  */
-public interface Identifiable extends Cloneable {
+public interface Identifiable {
 
-	/**
-	 * Returns an integer value, called ID, that can be used to identify the
-	 * corresponding object. The ID is usually used for equality checks and as a
-	 * simple, efficient hash function in conjuction with mappings
-	 * ({@link IdentifiableObjectMapping}).
-	 * @return an integer value identifing the corresponding object.
-	 */
-	int id();
-
-  public Object clone() throws CloneNotSupportedException;
-
+    /**
+     * Returns an integer value, called ID, that can be used to identify the
+     * corresponding object. The ID is usually used for equality checks and as a
+     * simple, efficient hash function in conjuction with mappings
+     * ({@link IdentifiableObjectMapping}).
+     * @return an integer value identifing the corresponding object.
+     */
+    int id();
 }

@@ -18,12 +18,11 @@ package org.zetool.container.collection;
 
 import org.zetool.container.mapping.Identifiable;
 import org.zetool.container.util.ArrayIterator;
+import org.zetool.container.mapping.IdentifiableCloneable;
 import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * The {@code ArraySet} class represents a set of
@@ -35,7 +34,7 @@ import java.util.logging.Logger;
  * or looking for an element with a specified ID.
  * @param <E>
  */
-public class ArraySet<E extends Identifiable> implements IdentifiableCollection<E> {
+public class ArraySet<E extends IdentifiableCloneable> implements IdentifiableCollection<E>, Cloneable {
 	/** The concrete type replacing the generics. Is needed because Java does not support generic arrays. */
 	private Class<? extends Identifiable> elementType;
 	/** The intern array to store the elements by their ID. */
@@ -433,11 +432,8 @@ public class ArraySet<E extends Identifiable> implements IdentifiableCollection<
 	public ArraySet<E> clone() {
 		E[] c = (E[])Array.newInstance( elementType, elements.length );
 		for( int i = 0; i < elements.length; i++ ) {
-      try {
-        c[i] = elements[i] == null ? null : (E)elements[i].clone();
-      } catch( CloneNotSupportedException ex ) {
-        throw new AssertionError( "Clone not supported", ex );
-      }
+                    E e = elements[i];
+                    c[i] = elements[i] == null ? null : (E)elements[i].clone();
 		}
 		return new ArraySet<>( c );
 	}

@@ -20,7 +20,7 @@ import org.zetool.container.localization.CollectionLocalization;
 import java.util.Iterator;
 
 /**
- * A custom iterator thatallows to iterate over several iterators in one run.
+ * A custom iterator that allows to iterate over several iterators in one run.
  * @author Jan-Philipp Kappmeier
  * @param <T> the type that is iterated over
  */
