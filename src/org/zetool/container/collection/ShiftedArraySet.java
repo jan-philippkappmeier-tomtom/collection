@@ -3,6 +3,7 @@ package org.zetool.container.collection;
 
 import org.zetool.container.collection.ArraySet;
 import org.zetool.container.mapping.Identifiable;
+import org.zetool.container.mapping.IdentifiableCloneable;
 
 /**
  * A shifted arrayset contains object that are identifiable, but that do not
@@ -12,7 +13,7 @@ import org.zetool.container.mapping.Identifiable;
 
 * @author Jan-Philipp Kappmeier
  */
-public class ShiftedArraySet<E extends Identifiable> extends ArraySet<E> {
+public class ShiftedArraySet<E extends IdentifiableCloneable> extends ArraySet<E> {
   final int offset;
   
 	/**

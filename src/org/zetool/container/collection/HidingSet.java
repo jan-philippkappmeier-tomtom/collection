@@ -19,6 +19,7 @@ package org.zetool.container.collection;
 import org.zetool.container.localization.CollectionLocalization;
 import org.zetool.container.mapping.Identifiable;
 import java.util.Iterator;
+import org.zetool.container.mapping.IdentifiableCloneable;
 
 /**
  * The {@code HidingSet} class extends the {@link ArraySet} class by the
@@ -29,7 +30,7 @@ import java.util.Iterator;
  * jump over hidden elements.
  * @param <E>
  */
-public class HidingSet<E extends Identifiable> extends ArraySet<E> implements IdentifiableCollection<E> {
+public class HidingSet<E extends IdentifiableCloneable> extends ArraySet<E> implements IdentifiableCollection<E> {
 
 	/** The array to store which elements are currently hidden. */
 	private boolean[] hidden;

@@ -18,6 +18,7 @@ package org.zetool.container.collection;
 
 import org.zetool.container.mapping.Identifiable;
 import java.util.Iterator;
+import org.zetool.container.mapping.IdentifiableCloneable;
 
 /**
  * The {@code DependingHidingList} class represents a list of {@link Identifiable}
@@ -27,7 +28,7 @@ import java.util.Iterator;
  * will be considered as not present whenever methods are called (e.g. {@code size()</code,
  * {@code first()} and so on).
  */
-public class DependingListSequence<E extends Identifiable> extends ListSequence<E> {
+public class DependingListSequence<E extends IdentifiableCloneable> extends ListSequence<E> {
 
     public IdentifiableCollection<E> baseSet;
 
