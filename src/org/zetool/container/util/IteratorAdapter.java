@@ -21,6 +21,7 @@ import java.util.function.Function;
 
 /**
  * Returns an iterator by applying an adapter to the types of a different iterator.
+ * 
  * @param <T> the original type that is iterated over
  * @param <R> the adapted result type
  * @author Jan-Philipp Kappmeier

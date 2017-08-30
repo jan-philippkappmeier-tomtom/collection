@@ -2,8 +2,6 @@ package org.zetool.container.util;
 
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
 import org.zetool.container.localization.CollectionLocalization;
 
 /**
@@ -13,14 +11,17 @@ import org.zetool.container.localization.CollectionLocalization;
  */
 public class IterableIterator<E> implements Iterator<E> {
 
-    /** The stored elements. */
-    private final List<Iterable<E>> data;
     private final Iterator<Iterable<E>> iterator;
     /** The current iterator. */
     private Iterator<E> current = Collections.<E>emptyList().iterator();
 
-    public IterableIterator(List<Iterable<E>> data, int index) {
-        this.data = Objects.requireNonNull(data, "Array must not be null.");
+    /**
+     * Initializes the {@link Iterable} with the list of objects that are to be iterated over.
+     * 
+     * @param data the collections over which is iterated
+     * @throws NullPointerException when the input {@code data} is {@literal null}
+     */
+    public IterableIterator(Iterable<Iterable<E>> data) {
         this.iterator = data.iterator();
     }
 
