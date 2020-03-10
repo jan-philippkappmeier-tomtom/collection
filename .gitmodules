@@ -1,3 +1,0 @@
-[submodule ".submodules/common"]
-	path = .submodules/common
-	url = https://github.com/zetool/common.git
