@@ -1,10 +1,6 @@
 language: java
 
-install: ant resolve
-
-script: 
-  - ant test.travis
+dist: bionic
 
 jdk:
   - oraclejdk8
-
