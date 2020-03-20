@@ -31,14 +31,14 @@ jobs:
         servers: '[{ "id": "github", "username": "zetool-bot", "password": "${GITHUB_TOKEN}" }]'
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Copy settings for release
+      run: cp ~/.m2/settings.xml .
     - name: Publish to GitHub Packages
-      uses: qcastel/github-actions-maven-release@master
+      uses: kappmeier/github-actions-maven-release@master
       with:
         release-branch-name: "master"
 
-        maven-repo-server-id: github
-        maven-repo-server-username: zetool-bot
-        maven-repo-server-password: ${{ secrets.GITHUB_RELEASE_TOKEN }}
+        settings-file: "./settings.xml"
 
         maven-args: "-X -Dmaven.javadoc.skip=true -DskipTests"
 
