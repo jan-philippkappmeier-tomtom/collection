@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
+
 import org.zetool.container.mapping.IdentifiableCloneable;
 
 /**
@@ -29,17 +29,17 @@ import org.zetool.container.mapping.IdentifiableCloneable;
  * provides all specified methods. Anyway, the class is best used by only adding and deleting elements without asking
  * for containedness of elements with specified IDs or removing arbitrary elements.
  *
- * @param <E>
+ * @param <E> the type of identifiable objects
  */
 public class ListSequence<E extends IdentifiableCloneable> implements IdentifiableCollection<E>, Cloneable {
 
-    private final LinkedList<E> l;
+    private final LinkedList<E> backingList;
 
     /**
      * Creates a {@code ListSequence} object without elements.
      */
     public ListSequence() {
-        l = new LinkedList<>();
+        backingList = new LinkedList<>();
     }
 
     /**
@@ -49,7 +49,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
      * @param c
      */
     public ListSequence(Collection<? extends E> c) {
-        l = new LinkedList<>(c);
+        backingList = new LinkedList<>(c);
     }
 
     /**
@@ -61,7 +61,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
      */
     @Override
     public boolean add(E element) {
-        return l.add(element);
+        return backingList.add(element);
     }
 
     /**
@@ -71,7 +71,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
      */
     @Override
     public E removeLast() {
-        E last = l.getLast();
+        E last = backingList.getLast();
         remove(last);
         return last;
     }
@@ -108,7 +108,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
      */
     @Override
     public boolean contains(E element) {
-        return l.contains(element);
+        return backingList.contains(element);
     }
 
     /**
@@ -123,11 +123,11 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
      */
     @Override
     public E predecessor(E element) {
-        int i = l.indexOf(element);
+        int i = backingList.indexOf(element);
         if (i == -1 || i == 0) {
             return null;
         }
-        return l.get(i - 1);
+        return backingList.get(i - 1);
     }
 
     /**
@@ -142,11 +142,11 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
      */
     @Override
     public E successor(E element) {
-        int i = (l.indexOf(element));
-        if (i == -1 || i == l.size() - 1) {
+        int i = (backingList.indexOf(element));
+        if (i == -1 || i == backingList.size() - 1) {
             return null;
         }
-        return l.get(i + 1);
+        return backingList.get(i + 1);
     }
 
     /**
@@ -160,7 +160,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
         if (this.isEmpty()) {
             return null;
         } else {
-            return l.getFirst();
+            return backingList.getFirst();
         }
     }
 
@@ -175,7 +175,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
         if (this.isEmpty()) {
             return null;
         } else {
-            return l.getLast();
+            return backingList.getLast();
         }
     }
 
@@ -212,7 +212,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
     @SuppressWarnings("unchecked")
     public ListSequence<E> clone() throws CloneNotSupportedException {
         ListSequence<E> copy = (ListSequence<E>) super.clone();
-        for (E e : l) {
+        for (E e : backingList) {
             E cloned = (E) e.clone();
             copy.add(cloned);
         }
@@ -259,7 +259,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
     @Override
     public int hashCode() {
         int h = 0;
-        for (E e : l) {
+        for (E e : backingList) {
             h += Math.floor(e.hashCode() / this.size());
         }
         return h;
@@ -267,17 +267,17 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
 
     @Override
     public int size() {
-        return l.size();
+        return backingList.size();
     }
 
     @Override
     public E get(int id) {
-        return l.get(id);
+        return backingList.get(id);
     }
 
     @Override
     public Iterator<E> iterator() {
-        return l.iterator();
+        return backingList.iterator();
     }
 
     /**
@@ -287,7 +287,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
      */
     @Override
     public boolean isEmpty() {
-        return l.isEmpty();
+        return backingList.isEmpty();
     }
 
     public boolean containsAll(Collection<?> c) {
@@ -315,33 +315,33 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
     }
 
     public void clear() {
-        l.clear();
+        backingList.clear();
     }
 
     public int indexOf(E o) {
-        return l.indexOf(o);
+        return backingList.indexOf(o);
     }
 
     public E getFirst() {
-        return l.getFirst();
+        return backingList.getFirst();
     }
 
     public E getLast() {
-        return l.getLast();
+        return backingList.getLast();
     }
 
     public E removeFirst() {
-        E first = l.getFirst();
+        E first = backingList.getFirst();
         remove(first);
         return first;
     }
 
     public void addFirst(E e) {
-        l.addFirst(e);
+        backingList.addFirst(e);
     }
 
     public List<E> asList() {
-        return Collections.unmodifiableList(l);
+        return Collections.unmodifiableList(backingList);
     }
 
 }
