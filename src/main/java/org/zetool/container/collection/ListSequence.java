@@ -80,6 +80,7 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
      * Removes the first element in this {@code ListSequence} having the same ID as {@code element}.
      *
      * @param element the element to be removed.
+     * @return if the element was removed
      */
     @Override
     public boolean remove(E element) {
@@ -298,18 +299,30 @@ public class ListSequence<E extends IdentifiableCloneable> implements Identifiab
         return result;
     }
 
-    public boolean addAll(Iterable<? extends E> c) {
+    /**
+     * Adds multiple elements to the {@code ListSequence}.
+     *
+     * @param elements the elements to be added
+     * @return {@code true} if the list sequence was modified
+     */
+    public boolean addAll(Iterable<? extends E> elements) {
         boolean result = false;
-        for (E e : c) {
-            result = result || add(e);
+        for (E e : elements) {
+            result |= add(e);
         }
         return result;
     }
 
-    public boolean removeAll(Collection<?> c) {
+    /**
+     * Tries to remove all passed elements from the {@code ListSequence}.
+     *
+     * @param elements the elements to be removed
+     * @return whether the list sequence was modified
+     */
+    public boolean removeAll(Collection<?> elements) {
         boolean result = false;
-        for (Object o : c) {
-            result = result || this.remove((E)o);
+        for (Object o : elements) {
+            result |= this.remove((E) o);
         }
         return result;
     }
