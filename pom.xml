@@ -21,7 +21,7 @@
 
     <groupId>org.zetool</groupId>
     <artifactId>collection</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3-SNAPSHOT</version>
     <name>zetool-collection</name>
     <url>https://zetool.org</url>
 
@@ -104,6 +104,6 @@
     <scm>
         <connection>scm:git:https://github.com/zetool/collection.git</connection>
         <url>https://github.com/zetool/collection.git</url>
-        <tag>collection-0.1.2</tag>
+        <tag>HEAD</tag>
     </scm>
 </project>
