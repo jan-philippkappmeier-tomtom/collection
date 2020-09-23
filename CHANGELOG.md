@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Bugfix
+- Throw exception when increasing the domain size for `IdentifiableIntegerMapping` overflows.
+
 ## [0.1.2]
 
 ### Bugfix
