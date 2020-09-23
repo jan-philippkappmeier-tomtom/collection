@@ -144,7 +144,8 @@ public class IdentifiableIntegerMapping<D extends Identifiable> implements Clone
      * increased.
      * @exception ArrayIndexOutOfBoundsException if {@code identifiableObject}'s ID is less then 0 or greater equal than
      * the size of the domain.
-     * @exception NullPointerException if {@code identifiableObject} is null.
+     * @exception NullPointerException if {@code identifiableObject} is null
+     * @exception ArithmeticException if the new domain size produces an overflow
      * @see #getDomainSize
      * @see #setDomainSize
      * @see Identifiable
@@ -153,7 +154,7 @@ public class IdentifiableIntegerMapping<D extends Identifiable> implements Clone
         if (identifiableObject.id() >= getDomainSize()) {
             setDomainSize(identifiableObject.id() + 1);
         }
-        mapping[identifiableObject.id()] += amount;
+        mapping[identifiableObject.id()] = Math.addExact(mapping[identifiableObject.id()], amount);
     }
 
     /**
